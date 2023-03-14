@@ -1,14 +1,16 @@
-from django.db import models
 from django.conf import settings
-from django.urls import ...
+from django.db import models
 
-class users():
+
+class User(models.Model):
   name = models.CharField(max_length=50)
   birthday = models.DateField(null=True, blank=True)
   photo = models.URLField()
-  host_status = models.BooleanField()
-  join_date = models.DateField()
+  host_status = models.BooleanField(default=False)
+  join_date = models.DateField(null=True, blank=True)
 
+  def __str__(self):
+    return f"{self.name}"
 
 #Ubiquitious Language:
 
@@ -19,10 +21,6 @@ class users():
 # Host
 # Guest
 # Reviews
-
-
-class rentals():
-  address = models.CharField()
 
 #   FrontEnd:
 # - BookingCreateForm.js (Guest)
