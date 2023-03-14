@@ -6,6 +6,7 @@ class User(models.Model):
   name = models.CharField(max_length=50)
   birthday = models.DateField(null=True, blank=True)
   photo = models.URLField()
+  email = models.EmailField(max_length=254, null=True)
   host_status = models.BooleanField(default=False)
   join_date = models.DateField(null=True, blank=True, auto_now=True)
 
