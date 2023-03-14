@@ -7,7 +7,7 @@ class User(models.Model):
   birthday = models.DateField(null=True, blank=True)
   photo = models.URLField()
   host_status = models.BooleanField(default=False)
-  join_date = models.DateField(null=True, blank=True)
+  join_date = models.DateField(null=True, blank=True, auto_now=True)
 
   def __str__(self):
     return f"{self.name}"

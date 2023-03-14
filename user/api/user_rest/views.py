@@ -18,7 +18,7 @@ def api_user_list(request):
             content = json.loads(request.body)
             user = User.objects.create(**content)
             return JsonResponse(
-                {"Users": user}, encoder=UserEncoder, safe=False
+                {"users": user}, encoder=UserEncoder, safe=False
             )
         except:
             response = JsonResponse({"message": "Invalid User Info"})
