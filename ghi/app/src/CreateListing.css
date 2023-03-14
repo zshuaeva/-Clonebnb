@@ -1,0 +1,96 @@
+.create-listing-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  h1 {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 24px;
+    color: #222222;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  label {
+    font-size: 18px;
+    font-weight: bold;
+    color: #222222;
+  }
+
+  input[type="text"],
+  input[type="number"],
+  textarea {
+    font-size: 18px;
+    padding: 8px;
+    border: 1px solid #ebebeb;
+    border-radius: 4px;
+    color: #222222;
+    background-color: #f7f7f7;
+  }
+
+  input[type="text"]:focus,
+  input[type="number"]:focus,
+  textarea:focus {
+    outline: none;
+    border-color: #222222;
+    box-shadow: 0 0 0 3px rgba(34, 34, 34, 0.1);
+  }
+
+  button[type="submit"] {
+    font-size: 18px;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    background-color: #ff5a5f;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+
+  button[type="submit"]:hover {
+    background-color: #e04348;
+  }
+
+  .amenities-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 8px;
+  }
+
+  .amenities-container label {
+    display: flex;
+    align-items: center;
+    color: #222222;
+  }
+
+  .amenities-container input[type="checkbox"] {
+    margin-right: 8px;
+  }
+
+  .amenities-container input[type="checkbox"]:checked + label::before {
+    content: '\f00c';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 400;
+    font-size: 18px;
+    color: #ff5a5f;
+    margin-right: 8px;
+  }
+
+  .amenities-container input[type="checkbox"] + label::before {
+    content: '\f0c8';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 400;
+    font-size: 18px;
+    color: #ebebeb;
+    margin-right: 8px;
+  }
