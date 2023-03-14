@@ -1,0 +1,68 @@
+volumes:
+  airbnb-data:
+    external: true
+services:
+  react:
+    image: node:lts-bullseye
+    command: /bin/bash run.sh
+    working_dir: /app
+    volumes:
+      - ./ghi/app:/app
+    ports:
+      - "3000:3000"
+    environment:
+      HOST_OS: ${OS}
+      NODE_ENV: development
+      HOST: "0.0.0.0"
+  database:
+    image: postgres:14.2-bullseye
+    volumes:
+      - airbnb-data:/var/lib/postgresql/data
+      - ./db:/docker-entrypoint-initdb.d
+    environment:
+      - POSTGRES_MULTIPLE_DATABASES=bookings,users,rentals
+      - POSTGRES_PASSWORD=test-databases
+    ports:
+      - 15432:5432
+  booking-api:
+    build:
+      context: ./booking/api
+      dockerfile: ./Dockerfile.dev
+    ports:
+      - "8080:8000"
+    volumes:
+      - ./booking/api:/app
+    depends_on:
+      - database
+    environment:
+      DATABASE_URL: postgres://service:password@database:5432/service
+      WAIT_HOSTS: database:5432
+      WAIT_TIMEOUT: 240
+  rental-api:
+    build:
+      context: ./rental/api
+      dockerfile: ./Dockerfile.dev
+    ports:
+      - "8081:8000"
+    volumes:
+      - ./rental/api:/app
+    depends_on:
+      - database
+    environment:
+      DATABASE_URL: postgres://service:password@database:5432/service
+      WAIT_HOSTS: database:5432
+      WAIT_TIMEOUT: 240
+  user-api:
+    build:
+      context: ./user/api
+      dockerfile: ./Dockerfile.dev
+    ports:
+      - "8082:8000"
+    volumes:
+      - ./user/api:/app
+    depends_on:
+      - database
+    environment:
+      DATABASE_URL: postgres://service:password@database:5432/service
+      WAIT_HOSTS: database:5432
+      WAIT_TIMEOUT: 240
