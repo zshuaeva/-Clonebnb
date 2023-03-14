@@ -20,7 +20,7 @@ services:
       - airbnb-data:/var/lib/postgresql/data
       - ./db:/docker-entrypoint-initdb.d
     environment:
-      - POSTGRES_MULTIPLE_DATABASES=bookings,users,rentals
+      - POSTGRES_MULTIPLE_DATABASES=booking,user,rental
       - POSTGRES_PASSWORD=test-databases
     ports:
       - 15432:5432
