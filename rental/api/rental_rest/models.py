@@ -1,4 +1,5 @@
 from django.db import models
+from user.api.user_rest.models import User
 
 
 class Amenity(models.Model):
@@ -37,9 +38,10 @@ class Amenity(models.Model):
 
 class Rental(models.Model):
     host = models.ForeignKey(
-        # User,
-        related_name="rental",
-        on_delete=models.PROTECT
+        User,
+        related_name="rentals",
+        on_delete=models.PROTECT,
+        null=True
     )
     address = models.CharField(max_length=255)
     city = models.CharField(max_length=255)
