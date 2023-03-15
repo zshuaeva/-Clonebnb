@@ -1,5 +1,5 @@
 from django.db import models
-from user.api.user_rest.models import User
+from user_rest.models import User
 
 
 class Amenity(models.Model):

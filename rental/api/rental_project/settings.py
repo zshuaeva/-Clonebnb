@@ -25,8 +25,6 @@ SECRET_KEY = 'django-insecure-ex52z$rt9zay@!m#v43m^!)vq7-216(!=tw%w)v77(z0*n-8+-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-AUTH_USER_MODEL = 'user_rest.User'
-
 ALLOWED_HOSTS = ["localhost"]
 
 CSRF_TRUSTED_ORIGINS = [
@@ -46,7 +44,7 @@ CORS_ALLOW_CREDENTIALS = True
 # Application definition
 
 INSTALLED_APPS = [
-    'user.api.user_rest.apps.UserRestConfig',
+    'user_rest.apps.UserRestConfig',
     'rental_rest.apps.RentalRestConfig',
     'django.contrib.admin',
     'django.contrib.auth',
