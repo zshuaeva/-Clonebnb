@@ -46,6 +46,7 @@ const SignupForm = () => {
       },
     }
     const userResponse = await fetch(userUrl, fetchConfig)
+    await userResponse.json()
     if (userResponse.ok) {
       setUserName('')
       setPassword('')
@@ -131,12 +132,12 @@ const SignupForm = () => {
 
             <div className="form-check form-switch">
             <input className="form-check-input" type="checkbox" id="flexSwitchCheckDefault" onClick={handleCheckboxClick}/>
-              <label className="form-check-label" for="flexSwitchCheckDefault">Check the Box if Host</label>
+              <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Check the Box if Host</label>
             </div>
 
             <div className="form-check form-switch">
             <input className="form-check-input" type="checkbox" id="flexSwitchCheckDefault" onClick={handleCheckboxClick2}/>
-              <label className="form-check-label" for="flexSwitchCheckDefault">Check the Box if Superhost</label>
+              <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Check the Box if Superhost</label>
             </div>
 
             <button className="btn btn-primary">Submit</button>

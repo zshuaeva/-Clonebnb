@@ -8,8 +8,8 @@ class User(AbstractUser):
   birthday = models.CharField(null=True, blank=True, max_length=10)
   photo = models.URLField()
   email = models.EmailField(max_length=254, null=True)
-  host_status = models.BooleanField(default=False)
-  is_superhost = models.BooleanField(default=False)
+  host_status = models.BooleanField(default=False, null=True)
+  is_superhost = models.BooleanField(default=False, null=True)
   password = models.CharField(max_length=128, default=make_password(None))
 
   # def __str__(self):
