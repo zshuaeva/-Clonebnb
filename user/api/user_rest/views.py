@@ -6,10 +6,11 @@ from django.core.serializers.json import DjangoJSONEncoder
 from django.db.models.fields import DateField
 from django.views.decorators.http import require_http_methods
 from .models import User
-from .encoders import UserEncoder, CustomJSONEncoder_User
+from .encoders import CustomJSONEncoder_User, UserEncoder
 
 
-
+def user_to_json(user):
+    return json.dumps(user, cls=UserEncoder)
 
 @require_http_methods(["GET", "POST"])
 def api_user_list(request):
