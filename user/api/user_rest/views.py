@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from common.json import ModelEncoder
 import json
 from django.core.serializers.json import DjangoJSONEncoder
@@ -7,6 +7,7 @@ from django.db.models.fields import DateField
 from django.views.decorators.http import require_http_methods
 from .models import User, Rental, Amenity
 from .encoders import CustomJSONEncoder_User, UserEncoder, RentalEncoder, AmenityEncoder
+
 
 
 def user_to_json(user):
@@ -46,9 +47,7 @@ def rental_list(request):
 
     elif request.method == "POST":
         data = json.loads(request.body)
-        print(data["host_id"])
-        # host_id = data.host_id
-        print(host_id)
+        host_id = data["host_id"]
         host = User.objects.get(id=host_id) if host_id else None
         print(host)
         rental = Rental.objects.create(host=host, **data)
@@ -72,48 +71,47 @@ def rental_list(request):
         )
 
 
-@require_http_methods(["GET", "PUT", "DELETE"])
+@require_http_methods(["GET"])
 def rental_detail(request, id):
     try:
         rental = Rental.objects.get(id=id)
+        return JsonResponse(
+            rental,
+            encoder=RentalEncoder,
+            safe=False
+        )
     except Rental.DoesNotExist:
-        return JsonResponse(
-            {"error": "Rental not found"},
-            status=404
-        )
+        response = JsonResponse({"message": "Rental not found"})
+        response.status_code = 404
+        return response
 
-    if request.method == "GET":
-        return JsonResponse(
-            rental,
-            encoder=RentalEncoder,
-            safe=False
-        )
 
-    elif request.method == "PUT":
-        data = json.loads(request.body)
-        amenity_data = data.append("amenity", None)
-        Rental.objects.filter(id=id).update(**data)
 
-        if amenity_data:
-            Amenity.objects.filter(rental=rental).update(**amenity_data)
+    # elif request.method == "PUT":
+    #     data = json.loads(request.body)
+    #     amenity_data = data.append("amenity", None)
+    #     Rental.objects.filter(id=id).update(**data)
 
-        rental.refresh_from_db()
+    #     if amenity_data:
+    #         Amenity.objects.filter(rental=rental).update(**amenity_data)
 
-        return JsonResponse(
-            rental,
-            encoder=RentalEncoder,
-            safe=False
-        )
+    #     rental.refresh_from_db()
 
-    elif request.method == "DELETE":
-        rental.delete()
-        return JsonResponse(
-            {"message": "Rental deleted"},
-            status=204
-        )
+    #     return JsonResponse(
+    #         rental,
+    #         encoder=RentalEncoder,
+    #         safe=False
+    #     )
 
-    else:
-        return JsonResponse(
-            {"error": "Invalid request method"},
-            status=405
-        )
+    # elif request.method == "DELETE":
+    #     rental.delete()
+    #     return JsonResponse(
+    #         {"message": "Rental deleted"},
+    #         status=204
+    #     )
+
+    # else:
+    #     return JsonResponse(
+    #         {"error": "Invalid request method"},
+    #         status=405
+    #     )

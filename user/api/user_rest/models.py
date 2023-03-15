@@ -5,7 +5,7 @@ from django.contrib.auth.hashers import make_password
 
 
 class User(AbstractUser):
-  birthday = models.DateField(null=True, blank=True)
+  birthday = models.CharField(null=True, blank=True, max_length=10)
   photo = models.URLField()
   email = models.EmailField(max_length=254, null=True)
   host_status = models.BooleanField(default=False)
@@ -64,6 +64,8 @@ class Amenity(models.Model):
     bathtub = models.BooleanField(default=False)
     great_location = models.BooleanField(default=False)
 
+
+
 class Rental(models.Model):
     host = models.ForeignKey(
         User,
@@ -76,7 +78,7 @@ class Rental(models.Model):
     state = models.CharField(max_length=255)
     zip_code = models.IntegerField()
     country = models.CharField(max_length=255)
-    amenity = models.OneToOneField(
+    amenity = models.ForeignKey(
       Amenity,
       related_name="amenity",
       on_delete=models.PROTECT,
@@ -84,4 +86,4 @@ class Rental(models.Model):
     )
 
     def __str__(self):
-        return f"{self.address}, {self.city}, {self.state} {self.zip_code}, {self.country}"
+        return f"{self.address}, {self.city}, {self.state} {self.zip_code}, {self.country}, {self.amenity}"

@@ -3,10 +3,11 @@ from .models import User, Amenity, Rental
 from common.json import ModelEncoder
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db.models.fields import DateField
+from datetime import date
 
 class CustomJSONEncoder_User(DjangoJSONEncoder):
     def default(self, obj):
-        if isinstance(obj, DateField):
+        if isinstance(obj, date):
             return obj.strftime('%Y-%m-%d')
         if isinstance(obj, User):
             return {
@@ -23,9 +24,6 @@ class CustomJSONEncoder_User(DjangoJSONEncoder):
             }
         return super().default(obj)
 
-
-
-from .models import User
 
 class UserEncoder(DjangoJSONEncoder):
     def default(self, obj):
@@ -90,5 +88,5 @@ class RentalEncoder(ModelEncoder):
     ]
     encoders = {
         "amenity": AmenityEncoder(),
-        "host": UserEncoder(),
+        "host": CustomJSONEncoder_User(),
     }
