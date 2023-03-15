@@ -25,13 +25,14 @@ SECRET_KEY = 'django-insecure-*i_go(vly=eabw6=5#5qdipvl&=idbut2f1xa3berk6lxj!2^d
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["user-api", "localhost"]
 
 
 # Application definition
 
 INSTALLED_APPS = [
     'corsheaders',
+    'djwto',
     'user_rest.apps.UserRestConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -40,6 +41,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
+
+AUTH_USER_MODEL = "user_rest.User"
+
+DJWTO_MODE = "TWO-COOKIES"
+DJWTO_ACCESS_TOKEN_LIFETIME = None
+CSRD_TRUSTED_ORIGINS = ["http://localhost:3000/"]
+CORS_ALLOW_CREDENTIALS = True
+
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
