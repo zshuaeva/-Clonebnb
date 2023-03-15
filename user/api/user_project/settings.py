@@ -25,12 +25,15 @@ SECRET_KEY = 'django-insecure-*i_go(vly=eabw6=5#5qdipvl&=idbut2f1xa3berk6lxj!2^d
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["user-api", "localhost"]
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'corsheaders',
+    'djwto',
+    'user_rest.apps.UserRestConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -39,7 +42,16 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
+AUTH_USER_MODEL = "user_rest.User"
+
+DJWTO_MODE = "TWO-COOKIES"
+DJWTO_ACCESS_TOKEN_LIFETIME = None
+CSRD_TRUSTED_ORIGINS = ["http://localhost:3000/"]
+CORS_ALLOW_CREDENTIALS = True
+
+
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -50,6 +62,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'user_project.urls'
+
+CORS_ALLOWED_ORIGINS = [    "http://localhost:3000",    "http://localhost:8080",    "http://localhost:8081",    "http://localhost:8082",]
 
 TEMPLATES = [
     {
