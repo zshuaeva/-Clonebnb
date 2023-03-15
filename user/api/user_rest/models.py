@@ -16,7 +16,7 @@ class User(AbstractUser):
   def __str__(self):
     return f"{self.name}"
 
-#Ubiquitious Language:
+#Ubiquitous Language:
 
 # login form
 # sign up form

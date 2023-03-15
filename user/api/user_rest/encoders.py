@@ -18,7 +18,7 @@ class CustomJSONEncoder_User(DjangoJSONEncoder):
                 'first_name': obj.first_name,
                 'last_name': obj.last_name,
                 'birthday': obj.birthday,
-                'password': obj.password
+                'password': obj.password,
             }
         return super().default(obj)
 

@@ -31,7 +31,15 @@ def api_user_list(request):
             return response
 
 
-
+class UserEncoder(ModelEncoder):
+    model = User
+    properties = [
+        "id",
+        "username",
+        "first_name",
+        "last_name",
+        "email",
+    ]
 
 
 class AmenityEncoder(ModelEncoder):
@@ -76,6 +84,7 @@ class RentalEncoder(ModelEncoder):
     ]
     encoders = {
         "amenities": AmenityEncoder(),
+        "host": UserEncoder(),
     }
 
 
@@ -92,12 +101,14 @@ def rental_list(request):
 
     elif request.method == "POST":
         data = json.loads(request.body)
-        amenity_data = data.pop("amenities", None)
-        rental = Rental.objects.create(**data)
+        host_id = data.pop("host", None)
+        host = User.objects.get(id=host_id) if host_id else None
+        rental = Rental.objects.create(host=host, **data)
 
+        amenity_data = data.pop("amenities", None)
         if amenity_data:
             amenity = Amenity.objects.create(rental=rental, **amenity_data)
-            rental.amenities.add(amenity)
+            rental.amenities.set(amenity)
 
         return JsonResponse(
             rental,
@@ -133,11 +144,12 @@ def rental_detail(request, id):
     elif request.method == "PUT":
         data = json.loads(request.body)
         amenity_data = data.pop("amenities", None)
-        rental = Rental.objects.update(**data)
+        Rental.objects.filter(id=id).update(**data)
 
         if amenity_data:
-            amenity = Amenity.objects.update(rental=rental, **amenity_data)
-            rental.amenities.add(amenity)
+            Amenity.objects.filter(rental=rental).update(**amenity_data)
+
+        rental.refresh_from_db()
 
         return JsonResponse(
             rental,

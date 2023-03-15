@@ -46,7 +46,10 @@ AUTH_USER_MODEL = "user_rest.User"
 
 DJWTO_MODE = "TWO-COOKIES"
 DJWTO_ACCESS_TOKEN_LIFETIME = None
-CSRD_TRUSTED_ORIGINS = ["http://localhost:3000/"]
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:3000/",
+    "http://localhost:8082/"
+    ]
 CORS_ALLOW_CREDENTIALS = True
 
 
@@ -55,7 +58,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
