@@ -32,7 +32,7 @@ function AppNav({ empty = false }) {
                 <NavDropdown.Item href="/users/signup">
                   Sign Up
                 </NavDropdown.Item>
-                <NavDropdown.Item href="/users/signin">
+                <NavDropdown.Item href="/users/login">
                   Sign In
                 </NavDropdown.Item>
                 <NavDropdown.Divider />
